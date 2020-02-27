@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
     /**
@@ -17,13 +19,14 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
-//        if(\Auth::user()->level < 99) {
-            return view('dashboard');
-//        }
-//        else return ;
+        if(auth()->user()->level() >= 1) {
+            return view('admin.index');
+        } else {
+            return view('home');
+        }
     }
 }

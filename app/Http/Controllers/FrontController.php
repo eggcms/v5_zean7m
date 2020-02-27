@@ -2,36 +2,26 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use App\Blog;
+use DB;
 use App\Analyze;
-use App\Tstep;
-use App\Youtube;
-use App\User;
+use App\Lotto;
 class FrontController extends Controller
 {
-	public function index() {
-		$news = new Blog;
-		$last_news = $news->orderBy('id','desc')->first();
-		$news = $news->orderBy('id','desc')->where('id','!=',$news->pluck('id')->last())->take(4)->get();
+    public function index() {
 
-		$anas = new Analyze;
-		$analyzes = $anas->orderBy('id','desc')->take(6)->get();
-
-		$ts = new Tstep;
-		$tstepsx = $ts->orderBy('id','asc')->where('updated_at','>',date("Y-m-d 06:00:00"))->take(8)->get();
+		$news = DB::table('blogs')->orderBy('id','desc')->take(5)->get();
+		$analyzes = Analyze::orderBy('id','desc')->take(6)->get();
 
 		$json = file_get_contents('https://zeanza.com/mm88fa-api/vision_data/api.php?met=hdp&APIkey=S09ZWFArak1BZTNpcUZGNTA2YWVia2tjU0F0bUVyazNZdjJVSGpZWXJMcDlrWHFYRGNnYlRjTWphaFg1RUVVWGh6WjNsUDZ6WUJKeDlCYUFRZzdrenc9PTo6G5mkISD1Nfndtt7QHBsBSA==');
 		$objs = json_decode($json);
+		$youtube = DB::table('youtubes')->orderBy('id','desc')->take(2)->get();
+		$tsteps = DB::table('tsteps')->orderBy('id','asc')->where('updated_at','>',date("Y-m-d 06:00:00"))->take(8)->get();
 
-		$you = new Youtube;
-		$yous = $you->orderBy('id','desc')->take(2)->get();
-
-		$max_tstep=$tstepsx->count();
+		$max_tstep=$tsteps->count();
         $dataxSet = [];
         if ($max_tstep > 0) {
-			foreach($tstepsx as $ttsx) {
-				$av = User::where('id',$ttsx->uid)->first();
+			foreach($tsteps as $ttsx) {
+				//$av = db::table('users')->where('id',$ttsx->uid)->first();
 				if ($ttsx->team1w == 0) { $ttsx->team1w='black'; }
 				elseif ($ttsx->team1w == 1) { $ttsx->team1w='red'; }
 				elseif ($ttsx->team1w == 2) { $ttsx->team1w='#00CC00'; }
@@ -52,104 +42,76 @@ class FrontController extends Controller
 					"team3w"=> $ttsx->team3w,
 					"created_at"=> $ttsx->created_at,
                     "updated_at"=> $ttsx->updated_at,
-					"avatar"=> $av->avatar,
-					"facebook"=> $av->facebook,
-					"line"=> $av->line
 				];
 			}
 			$mm = (8 - $max_tstep);
 			for($i=1;$i<=$mm;$i++){
-				$dataxSet[] = ["id"=> '',"uid"=> '',"team1"=> '',"team2"=> '',"team3"=> '',"team1w"=> '',"team2w"=> '',"team3w"=> '',"created_at"=> '',"updated_at"=> '',"avatar"=>'no-avatar.jpg',"line"=>'',"facebook"=>''];
+				$dataxSet[] = ["id"=> '',"uid"=> '',"team1"=> '',"team2"=> '',"team3"=> '',"team1w"=> '',"team2w"=> '',"team3w"=> '',"created_at"=> '',"updated_at"=> ''];
 			}
 		}
-		else {
+		else {			
 			for($i=1;$i<=8;$i++){
-				$dataxSet[] = ["id"=> '',"uid"=> '',"team1"=> '',"team2"=> '',"team3"=> '',"team1w"=> '',"team2w"=> '',"team3w"=> '',"created_at"=> '',"updated_at"=> '',"avatar"=>'no-avatar.jpg',"line"=>'',"facebook"=>''];
+				$dataxSet[] = ["id"=> '',"uid"=> '',"team1"=> '',"team2"=> '',"team3"=> '',"team1w"=> '',"team2w"=> '',"team3w"=> '',"created_at"=> '',"updated_at"=> ''];
 			}			
 		}
 
-		return view('pages.user.home',[
-			'meta_title'=>'ทีเด็ดคลับดอทคอม ศูนย์รวมทีเด็ดบอลสเต็ป โดยบรรดากูรู ระดับเซียนในวงการลูกหนัง',
-			'meta_description'=>'ทีเด็ดคลับดอทคอม ศูนย์รวมทีเด็ดบอลสเต็ป ข้อมูลบอลจากลีกดังทั่วโลก โดยมุ่งเน้นข้อมูลที่ถูกต้อง ฉับไวเที่ยงตรง โดยบรรดากูรู ระดับเซียนในวงการลูกหนัง',
-			'last_news'=>$last_news,
+        return view('page.home',[
+			'meta_title'=>'เซียน7เอ็มดอทคอม ศูนย์รวมทีเด็ดบอลสเต็ป โดยบรรดากูรู ระดับเซียนในวงการลูกหนัง',
+			'meta_description'=>'เซียน7เอ็มดอทคอม ศูนย์รวมทีเด็ดบอลสเต็ป ข้อมูลบอลจากลีกดังทั่วโลก โดยมุ่งเน้นข้อมูลที่ถูกต้อง ฉับไวเที่ยงตรง โดยบรรดากูรู ระดับเซียนในวงการลูกหนัง',
 			'news'=>$news,
 			'analyzes'=>$analyzes,
 			'objs'=>$objs,
-            'youtubes'=>$yous,
-            'tstepsx'=>$dataxSet
+            'youtube'=>$youtube,
+            'tsteps'=>$dataxSet
+		]);
+	}
+	
+	public function allnews() {
+		$news = DB::table('blogs')->orderBy('id','desc')->get();
+		
+        return view('page.allnews',[
+		 	'meta_title'=>'เซียน7เอ็มดอทคอม ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก',
+		 	'meta_description'=>'เซียน7เอ็มดอทคอม ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก เที่ยงตรง กระชับ ฉับไว',
+		 	'allnews'=>$news
+		]);
+	}
+	
+    public function allvicrow() {
+        $analyzes = DB::table('analyzes')->orderBy('id','desc')->get();
+        return view('page.allvicrow',[
+			'meta_title'=>'เซียน7เอ็มดอทคอม วิเคราะห์บอลเด็ด จากลีกดังต่างๆ ทั่วโลก',
+			'meta_description'=>'เซียน7เอ็มดอทคอม วิเคราะห์ทีมบอล แบบเที่ยงตรง ข้อมูลแน่นๆ ฟันธงแบบเป๊ะๆ โดยกูรูขั้นเทพในวงการ',
+			'analyzes'=>$analyzes
+		]);
+	}
+	
+    public function news($id) {
+		visit($id);
+        $news = DB::table('blogs')->where('id',$id)->first();
+		$news_update = DB::table('blogs')->orderBy('id','desc')->where('id','!=',$news->id)->take(5)->get();
+        return view('page.news',[
+		 	'news'=>$news
+		],[
+		 	'news_update'=>$news_update
 		]);
 	}
 
-    public function allvicrow() {
-        $ans = new Analyze;
-        $analyzes = $ans->orderBy('id','desc')->get();
-        return view('pages.user.allvicrow',[
-			'meta_title'=>'ทีเด็ดคลับดอทคอม วิเคราะห์บอลเด็ด จากลีกดังต่างๆ ทั่วโลก',
-			'meta_description'=>'วิเคราะห์ทีมบอล แบบเที่ยงตรง ข้อมูลแน่นๆ ฟันธงแบบเป๊ะๆ โดยกูรูขั้นเทพในวงการ',
-			'analyzes'=>$analyzes
-		]);
-    }
-
-    public function allnews() {
-        $ns = new Blog;
-        $news = $ns->orderBy('id','desc')->get();
-        return view('pages.user.allnews',[
-			'meta_title'=>'ทีเด็ดคลับดอทคอม ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก',
-			'meta_description'=>'ทีเด็ดคลับดอทคอม ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก เที่ยงตรง กระชับ ฉับไว',
-			'allnews'=>$news
-		]);
-    }
-
-    public function news($id) {
-		visit($id);
-        $ns = new Blog;
-        $news = $ns->where('id',$id)->first();
-        $news_update = $ns->orderBy('id','desc')->where('id','!=',$news->id)->take(5)->get();
-        return view('pages.user.news',[
-			'news'=>$news
+	public function vicrow($id) {
+		visit($id,'none','analyze');
+        $vicrow = DB::table('analyzes')->where('id',$id)->first();
+		$vicrow_update = DB::table('analyzes')->orderBy('id','desc')->where('id','!=',$vicrow->id)->take(5)->get();
+        return view('page.vicrow',[
+		 	'vicrow'=>$vicrow
 		],[
-			'news_update'=>$news_update
+		 	'vicrow_update'=>$vicrow_update
 		]);
-    }
+	}
 
-    public function vview($id) {
-		visit($id,'c','analyze');
-        $an = new Analyze;
-        $ans = $an->where('id',$id)->first();
-        $ans_update = $ans->orderBy('id','desc')->where('id','!=',$ans->id)->take(5)->get();
-        return view('pages.user.vview',['ans'=>$ans],['ans_update'=>$ans_update]);
-    }
-
-    public function fullpage() {
-        $you = new Youtube;
-        $yous = $you->orderBy('id','desc')->take(2)->get();
-        $json = file_get_contents('https://zeanza.com/mm88fa-api/vision_data/api.php?met=stp&APIkey=S09ZWFArak1BZTNpcUZGNTA2YWVia2tjU0F0bUVyazNZdjJVSGpZWXJMcDlrWHFYRGNnYlRjTWphaFg1RUVVWGh6WjNsUDZ6WUJKeDlCYUFRZzdrenc9PTo6G5mkISD1Nfndtt7QHBsBSA==');
-        $objs = json_decode($json);
-        return view('pages.user.tdstep-page',[
-			'meta_title'=>'ทีเด็ดคลับดอทคอม ราคาบอลสเต็ปเดี่ยว',
-			'meta_description'=>'ทีเด็ดคลับดอทคอม ราคาบอลสเต็ปเดี่ยว ประจำวันนี้',
-			'objs'=>$objs,
-			'youtubes'=>$yous
-		]);
-    }
-
-    public function fullpage2() {
-        $you = new Youtube;
-        $yous = $you->orderBy('id','desc')->take(2)->get();
-        $json = file_get_contents('https://zeanza.com/mm88fa-api/vision_data/api.php?met=hdp&APIkey=S09ZWFArak1BZTNpcUZGNTA2YWVia2tjU0F0bUVyazNZdjJVSGpZWXJMcDlrWHFYRGNnYlRjTWphaFg1RUVVWGh6WjNsUDZ6WUJKeDlCYUFRZzdrenc9PTo6G5mkISD1Nfndtt7QHBsBSA==');
-        $objs = json_decode($json);
-        return view('pages.user.tdstep-page2',[
-			'meta_title'=>'ทีเด็ดคลับดอทคอม ราคาบอลสเต็ป',
-			'meta_description'=>'ทีเด็ดคลับดอทคอม ราคาบอลสเต็ป ประจำวันนี้',
-			'objs'=>$objs,
-			'youtubes'=>$yous
-		]);
-    }
-
-    public function lineNotify(Request $request) {
+	public function lineNotify(Request $request) {
         $message='name: '.$request->fullname.' mobile: '.$request->phone.' LineID: http://line.me/ti/p/~'.$request->lineid;
-        // tdedclub token: E85WI8wJ3xDUBlxLR0xGl9zOeep3TseAQMmyKA4kJw0
-        $token = 'E85WI8wJ3xDUBlxLR0xGl9zOeep3TseAQMmyKA4kJw0';
+		// tdedclub token: E85WI8wJ3xDUBlxLR0xGl9zOeep3TseAQMmyKA4kJw0
+		// zean7m token: NB8seJUF9qkjQ2wR5Dk4tZx19kRbcVLjRYX4QQgxDxA
+        $token = 'NB8seJUF9qkjQ2wR5Dk4tZx19kRbcVLjRYX4QQgxDxA';
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, "https://notify-api.line.me/api/notify");
         curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 0);
@@ -164,12 +126,46 @@ class FrontController extends Controller
         curl_close( $ch );
         return Redirect()->back();
 	}
-	
+
+	public function tdstep() {
+		$json = file_get_contents('https://zeanza.com/mm88fa-api/vision_data/api.php?met=hdp&APIkey=S09ZWFArak1BZTNpcUZGNTA2YWVia2tjU0F0bUVyazNZdjJVSGpZWXJMcDlrWHFYRGNnYlRjTWphaFg1RUVVWGh6WjNsUDZ6WUJKeDlCYUFRZzdrenc9PTo6G5mkISD1Nfndtt7QHBsBSA==');
+		$objs = json_decode($json);
+		$youtube = DB::table('youtubes')->orderBy('id','desc')->take(2)->get();
+		return view('page.tdstep',[
+			'meta_title'=>'เซียน7เอ็มดอทคอม ราคาบอลสเต็ปเดี่ยว',
+			'meta_description'=>'เซียน7เอ็มดอทคอม ราคาบอลสเต็ปเดี่ยว ประจำวันนี้',
+			'objs'=>$objs,
+			'youtube'=>$youtube
+		]);
+	}
+
+	public function tdstep2() {
+        $json = file_get_contents('https://zeanza.com/mm88fa-api/vision_data/api.php?met=hdp&APIkey=S09ZWFArak1BZTNpcUZGNTA2YWVia2tjU0F0bUVyazNZdjJVSGpZWXJMcDlrWHFYRGNnYlRjTWphaFg1RUVVWGh6WjNsUDZ6WUJKeDlCYUFRZzdrenc9PTo6G5mkISD1Nfndtt7QHBsBSA==');
+		$objs = json_decode($json);
+    	$youtube = DB::table('youtubes')->orderBy('id','desc')->take(2)->get();
+		return view('page.tdstep2',[
+	 		'meta_title'=>'เซียน7เอ็มดอทคอม ราคาบอลสเต็ป',
+	 		'meta_description'=>'เซียน7เอ็มดอทคอม ราคาบอลสเต็ป ประจำวันนี้',
+			'objs'=>$objs,
+			'youtube'=>$youtube
+		]);
+	}
+
     public function liveball() {
 		//$embed = ball_table();
-        return view('pages.user.live-page',[
-			'meta_title'=>'ทีเด็ดคลับดอทคอม ดูบอลบสด ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก',
-			'meta_description'=>'ทีเด็ดคลับดอทคอม ดูบอลบสด ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก เที่ยงตรง กระชับ ฉับไว',
+        return view('page.live',[
+			'meta_title'=>'เซียน7เอ็มดอทคอม ดูบอลบสด ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก',
+			'meta_description'=>'เซียน7เอ็มดอทคอม ดูบอลบสด ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก เที่ยงตรง กระชับ ฉับไว',
 		]);			
+	}	
+
+	public function lotto() {
+		return view('page.lotto');
+		//$lotto=Lotto::orderBy('lotto_at','desc')->first();
+		// return view('page.lotto',[
+		// 	'meta_title'=>'เซียน7เอ็มดอทคอม ตรวจสลากกินแบ่งรัฐบาล งวดวันที่ '.$lotto->lotto_at.' เว็บดูบอลบสด ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก',
+		// 	'meta_description'=>'เซียน7เอ็มดอทคอม ตรวจสลากกินแบ่งรัฐบาล งวดวันที่ '.$lotto->lotto_at.' เว็บดูบอลบสด ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก เที่ยงตรง กระชับ ฉับไว',
+		// 	'lotto'=>$lotto,
+		// ]);		
 	}
 }

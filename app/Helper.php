@@ -118,8 +118,8 @@ function ball_table() {
    if (count($data->programs)) {
       // Open the table
       echo "<div class='tableLive'>";
-      echo "<table class='table-doball table'>";
-      echo "<thead class='text-light'>";
+      echo "<table class='table-doball table text-light'>";
+      echo "<thead>";
       echo "<tr>";
       echo "<th class='mobileOpen'>ทีมเหย้า</th>";
       echo "<th class='mobileOpen'></th>";
@@ -130,7 +130,7 @@ function ball_table() {
       echo "<th class='mobileNone d-none'>ทีมเหย้า</th>";
       echo "<th class='mobileNone d-none'></th>";
       echo "<th class='mobileNone d-none'>ทีมเยือน</th>";
-      echo "<th class='mobileNone'>ช่องอื่นๆ</th>";
+      echo "<th class='mobileNone' width='20%'>ช่องอื่นๆ</th>";
       echo "<th>ดูบอล</th>";
       echo "</tr>";
       echo "</thead>";
@@ -140,7 +140,7 @@ function ball_table() {
       foreach ($data->programs as $idx => $programs) {
             
          // Output a row
-         echo "<tr class='text-light'>";
+         echo "<tr>";
          $text_date = substr($programs->datetime,0,11);
          $date=date_create($text_date);
          $arrayS = [];
@@ -151,7 +151,7 @@ function ball_table() {
          echo '<td class="mobileOpen" style="text-align: right;"><a href="#" style="color: yellow;" onclick="return changeChannel(\'';
          echo $programs->channel[0]->code;
          echo '\');">' . $programs->hometeam . ' <img src="'. $programs->ht_logo . '"  style="height: 20px!important; width: auto; vertical-align: middle;  display: inline-block;">' . '</a></td>';
-         echo "<td class='mobileOpen text-center' style='max-width:20px!important;'>vs</td>";
+         echo "<td class='mobileOpen text-center' style='max-width:10px!important;'>vs</td>";
          echo '<td class="mobileOpen"><a href="#" style="color: red;" onclick="return changeChannel(\'';
          echo $programs->channel[0]->code;
          echo '\');"><img src="'. $programs->at_logo . '" style="height: 20px!important; width: auto; vertical-align: middle; display: inline-block;"> ' . $programs->awayteam . '</a></td>';
@@ -189,11 +189,10 @@ function ball_table() {
 }
 
 
-function ballstep($obj,$cls='danger') {
-   echo '<h3 style="font-size:20px; margin: 10px 0 5px 0;">ราคาบอลสเต็ป ทรรศนะบอลสเต็ป, ฟันธงบอลสเต็ป</h3>
-   <div id="review-socre">
+function ballstep($obj) {
+   echo '<div id="review-socre">
       <div class="head-tded">
-         <h3><span style="font-size:18px; color: #909090;">ประจำวันที่</span> '.thaiDate(date('d-m-Y'),'off').'</h3>
+         <h3 style="color: #FF0;"><span style="font-size:18px;">ประจำวันที่</span> '.thaiDate(date('d-m-Y'),'off').'</h3>
       </div>
    </div>';
  
@@ -201,7 +200,7 @@ function ballstep($obj,$cls='danger') {
     foreach($obj->data as $ob) {
       if ($ob->league_name != $league) {
          $league=$ob->league_name;
-         echo '<div class="div-table league-name bg-'.$cls.'">
+         echo '<div class="div-table league-name">
             <div class="div-tablerow">
             <div class="div-tablecell">
                <img  src="'.url("/images/007-soccer-ball-1.png").'" class="linkimg" width="25px" height="25px" >&nbsp;';

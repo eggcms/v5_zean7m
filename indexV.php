@@ -1,0 +1,20 @@
+<?php
+ini_set('memory_limit','2000M');
+define('_PATH', dirname(__FILE__));
+
+$filename = 'vendor.zip';
+$zip = new ZipArchive;
+$res = $zip->open($filename);
+if ($res === TRUE) {
+
+// Unzip path
+	$path = _PATH;
+
+// Extract file
+	$zip->extractTo($path);
+	$zip->close();
+
+	echo 'Unzip!';
+} else {
+	echo 'failed!';
+}

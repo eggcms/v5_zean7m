@@ -30,13 +30,32 @@
     <div class="container bg-con">
         <div class="row">
             <div class="col-12 my-2">
-                <div id="myVideo"></div>
+                <div id="livePlayer"></div>
             </div>
-            <div>
+            <div class="col-12">
                 {{ ball_table() }}
             </div>
         </div>
     </div>
 </div>
-
+<div class="listChannel container bg-con">
+    <div class="row">
+        @php
+        $dir = public_path('images/channel/*.png');
+        $images = glob($dir);
+        foreach($images as $image):
+        $total = explode("channel/",$image);
+        $name=explode(".",$total[1]);
+        echo "
+        <div class='col-3 col-sm-2 col-lg-2 col-xl-1 mb-2'>
+            <a href='#'".$name[0]."' onclick='return changeChannel(\"".$name[0]."\");'>
+                <img src='images/channel/".$name[0].".png' class='img-fluid'>
+            </a>
+        </div>";
+            
+        endforeach;
+        @endphp
+    </div>
+</div>
+<a href="#" class="btnDoball" onclick="return changeChannel('bein2');">รับชม</a>
 @endsection

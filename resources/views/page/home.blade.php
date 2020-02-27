@@ -41,10 +41,12 @@
                 <div class="row">
                     <div class="col-12 col-lg-9 pr-md-0">
 
+                        
 
-                        <img class="img-fluid" src="/images/channal.png" alt="">
-                    
-                    
+                        
+                        <div id="mPlayer" class="bg-light"></div>
+                            
+
                     
                     
                     

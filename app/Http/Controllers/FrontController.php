@@ -108,7 +108,7 @@ class FrontController extends Controller
 	}
 
 	public function lineNotify(Request $request) {
-        $message='name: '.$request->fullname.' mobile: '.$request->phone.' LineID: http://line.me/ti/p/~'.$request->lineid;
+        $message='name: '.$request->fullname.' mobile: '.$request->phone.'LineID: '.$request->lineid;
 		// tdedclub token: E85WI8wJ3xDUBlxLR0xGl9zOeep3TseAQMmyKA4kJw0
 		// zean7m token: NB8seJUF9qkjQ2wR5Dk4tZx19kRbcVLjRYX4QQgxDxA
         $token = 'NB8seJUF9qkjQ2wR5Dk4tZx19kRbcVLjRYX4QQgxDxA';

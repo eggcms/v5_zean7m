@@ -191,6 +191,10 @@ footer {
     i { color:#fff; }
 }
 
+.mobileOpen { display: none; }
+.table-doball .channel { min-width: 85px; text-align: center; }
+.table-doball .btnDoball { display: block; background: orange; color: #fff; border-radius: 3px;  padding-top: 5px; padding-bottom: 5px; text-decoration: none; curser: pointer;  }
+
 /* ===================== form - Login ===================== */
 
 
@@ -276,6 +280,15 @@ footer {
 
 @media (max-width: 768px) and (max-width: 991px) {}
 
+
+@media only screen and (max-width: 959px) {
+    .mobileOpen { display: table-cell; }
+    .mobileNone { display: none; }
+    .table-doball img { height: auto!important;  width: 100%; max-width: 50px!important; }
+    .table-doball td {
+        &:first-child , &:nth-of-type(3) { min-width: 150px; }
+    }
+}
 @media (max-width: 991px) {}
 
 @media (min-width: 768px) and (max-width: 991px) {}

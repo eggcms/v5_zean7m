@@ -1,3 +1,3 @@
 function changeChannel(value) {
-    createPlayer(value, "livePlayer", "true", "100%", "logo.png", "top-right");
+    createPlayer(value, "livePlayer", "true", "100%", "../images/logo-chnnal.png", "top-right");
  }

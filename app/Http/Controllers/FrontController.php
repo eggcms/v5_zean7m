@@ -108,7 +108,7 @@ class FrontController extends Controller
 	}
 
 	public function lineNotify(Request $request) {
-        $message='name: '.$request->fullname.' mobile: '.$request->phone.'LineID: '.$request->lineid;
+        $message='Name: '.$request->fullname.' Mobile: '.$request->phone.'LineID: '.$request->lineid;
 		// tdedclub token: E85WI8wJ3xDUBlxLR0xGl9zOeep3TseAQMmyKA4kJw0
 		// zean7m token: NB8seJUF9qkjQ2wR5Dk4tZx19kRbcVLjRYX4QQgxDxA
         $token = 'NB8seJUF9qkjQ2wR5Dk4tZx19kRbcVLjRYX4QQgxDxA';
@@ -159,13 +159,50 @@ class FrontController extends Controller
 		]);			
 	}	
 
+	public function check_lotto(Request $request) {
+		$myLotto=$request->input('ur_lotto');
+		$lotto=Lotto::orderBy('lotto_at','desc')->first();
+		$result=check_lotto($myLotto,$lotto);
+
+		$lotto_at=explode('-',$lotto->lotto_at);
+		$month = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+		$at =(int) $lotto_at[1];
+		$lotto_at=$lotto_at[0].' '.$month[$at].' '.ceil($lotto_at[2]+543);
+		return view('page.lotto',[
+			'lotto'=>$lotto,
+			'lotto1closeup'=>$lotto->lotto1,
+			'lotto2'=>explode(' ',$lotto->lotto2),
+			'lotto3'=>explode(' ',$lotto->lotto3),
+			'lotto4'=>explode(' ',$lotto->lotto4),
+			'lotto5'=>explode(' ',$lotto->lotto5),
+			'lotto_front3'=>explode(' ',$lotto->lotto_front3),
+			'lotto_last3'=>explode(' ',$lotto->lotto_last3),
+			'lotto_last2'=>$lotto->lotto_last2,
+			'lotto_at'=>$lotto_at,
+			'reason'=>$result['reason'],
+			'mylotto'=>$result['mylotto'],
+		]);	
+	}
 	public function lotto() {
-		return view('page.lotto');
-		//$lotto=Lotto::orderBy('lotto_at','desc')->first();
-		// return view('page.lotto',[
-		// 	'meta_title'=>'เซียน7เอ็มดอทคอม ตรวจสลากกินแบ่งรัฐบาล งวดวันที่ '.$lotto->lotto_at.' เว็บดูบอลบสด ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก',
-		// 	'meta_description'=>'เซียน7เอ็มดอทคอม ตรวจสลากกินแบ่งรัฐบาล งวดวันที่ '.$lotto->lotto_at.' เว็บดูบอลบสด ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก เที่ยงตรง กระชับ ฉับไว',
-		// 	'lotto'=>$lotto,
-		// ]);		
+		$lotto=Lotto::orderBy('lotto_at','desc')->first();
+//		dd(check_lotto('781403',$lotto));
+
+		$lotto_at=explode('-',$lotto->lotto_at);
+		$month = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+		$at =(int) $lotto_at[1];
+		$lotto_at=$lotto_at[0].' '.$month[$at].' '.ceil($lotto_at[2]+543);
+		return view('page.lotto',[
+			'lotto'=>$lotto,
+			'lotto1closeup'=>$lotto->lotto1,
+			'lotto2'=>explode(' ',$lotto->lotto2),
+			'lotto3'=>explode(' ',$lotto->lotto3),
+			'lotto4'=>explode(' ',$lotto->lotto4),
+			'lotto5'=>explode(' ',$lotto->lotto5),
+			'lotto_front3'=>explode(' ',$lotto->lotto_front3),
+			'lotto_last3'=>explode(' ',$lotto->lotto_last3),
+			'lotto_last2'=>$lotto->lotto_last2,
+			'lotto_at'=>$lotto_at,
+			'reason'=>'none',
+		]);		
 	}
 }

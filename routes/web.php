@@ -20,6 +20,7 @@ Route::post('/line-notify', 'FrontController@lineNotify');
 Route::get('/tdstep', 'FrontController@tdstep');
 Route::get('/tdstep2', 'FrontController@tdstep2');
 Route::get('/lotto', 'FrontController@lotto');
+Route::post('/lotto', 'FrontController@check_lotto');
 
 Route::get('/live', function () {
     return view('page.live');

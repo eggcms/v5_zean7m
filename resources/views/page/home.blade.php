@@ -52,9 +52,10 @@
                     
                     </div>
                     <div class="col-12 col-lg-3">
-                        {{--  <div class="py-3">
-                            <a class="nav-link" href="{{url('/lotto')}}">ตรวจรางวัล</a>
-                        </div>  --}}
+                        <div class="mb-2">
+                            <a class="nav-link" href="{{url('/lotto')}}"><img src="{{url('images/check-lotto.png')}}" width="100%" /></a>
+                        </div>
+                        
                         <div class="img mt-lg-0 mt-2 mb-2 ">
                             <a href="#"><img src="/images/promotion-1.jpg" alt="" style="width:100%; height:auto;"></a>
                         </div>

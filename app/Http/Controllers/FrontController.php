@@ -21,12 +21,7 @@ class FrontController extends Controller
         $dataxSet = [];
         $im=0;
         if ($max_tstep > 0) {
-<<<<<<< HEAD
-
 			foreach($tstepsx as $ttsx) {
-=======
-			foreach($tsteps as $ttsx) {
->>>>>>> 33af1f186a70b18c287f96cd4a3854085700b617
 				$im++;
 				$av = User::where('id',$ttsx->uid)->first();
 				if ($ttsx->team1w == 0) { $ttsx->team1w='black'; }

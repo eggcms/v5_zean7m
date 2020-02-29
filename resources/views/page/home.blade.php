@@ -157,42 +157,36 @@
         <div class="row">
             <div class="col-12">
                 <div class="row">
-                @if($tsteps)
                     @foreach($tsteps as $ts)
                     <div class="col-12 col-md-3 mt-3">
                         <div class="img-tded">
                             <div class="img-tded">
-                                <a href="#" target="_blank">
-                                    <img src="{{url('/images/balltor12.gif')}}" class="img-fluid">
-                                </a>
+                                 <a href="tsLineID($ts['img'])"><img src="{{url('/images/step-'. $ts['img'] .'.gif')}}" class="img-fluid"></a>
                             </div>
                         </div>
                         <div class="tded-step py-2 border-bottom">
                             @if($ts['team1'] != '')
-                                @if($ts['team1w'])
-                                    <p><span style="color:{{$ts['team1w']}}">{{$ts['team1']}}</span><img class="img-1" src="/images/ball.gif" alt=""></p>
-                                @endif                                
+                                <p><img class="img-1" src="/images/ball.gif" alt=""><span style="color:{{$ts['team1w']}}">{{$ts['team1']}}</span></p>
                             @else
                                 <p class="text-center">กำลังอัพเดทข้อมูล...</p>
                             @endif
                         </div>
                         <div class="tded-step py-2 border-bottom" style="background:#eee;">
                             @if($ts['team2'] != '')
-                                <p><span style="color:{{$ts['team2w']}}">{{$ts['team2']}}</span><img class="img-1" src="/images/ball.gif" alt=""></p>
+                                <p><img class="img-1" src="/images/ball.gif" alt=""><span style="color:{{$ts['team2w']}}">{{$ts['team2']}}</span></p>
                             @else
                                 <p class="text-center">กำลังอัพเดทข้อมูล...</p>
-                            @endif   
+                            @endif
                         </div>
                         <div class="tded-step py-2">
                             @if($ts['team3'] != '')
-                                <p><span style="color:{{$ts['team3w']}}">{{$ts['team3']}}</span><img class="img-1" src="/images/ball.gif" alt=""></p>
+                                <p><img class="img-1" src="/images/ball.gif" alt=""><span style="color:{{$ts['team3w']}}">{{$ts['team3']}}</span></p>
                             @else
                                 <p class="text-center">กำลังอัพเดทข้อมูล...</p>
                             @endif
                         </div>
                     </div>
                     @endforeach
-                @endif
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Analyze;
 use App\Lotto;
+use App\User;
 class FrontController extends Controller
 {
     public function index() {
@@ -22,7 +23,7 @@ class FrontController extends Controller
         $im=0;
         if ($max_tstep > 0) {
 			$im++;
-			foreach($tstepsx as $ttsx) {
+			foreach($tsteps as $ttsx) {
 				$av = User::where('id',$ttsx->uid)->first();
 				if ($ttsx->team1w == 0) { $ttsx->team1w='black'; }
 				elseif ($ttsx->team1w == 1) { $ttsx->team1w='red'; }
@@ -73,17 +74,17 @@ class FrontController extends Controller
             'tstep_count'=>$max_tstep,
 		]);
 	}
-	
+
 	public function allnews() {
 		$news = DB::table('blogs')->orderBy('id','desc')->get();
-		
+
         return view('page.allnews',[
 		 	'meta_title'=>'เซียน7เอ็มดอทคอม ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก',
 		 	'meta_description'=>'เซียน7เอ็มดอทคอม ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก เที่ยงตรง กระชับ ฉับไว',
 		 	'allnews'=>$news
 		]);
 	}
-	
+
     public function allvicrow() {
         $analyzes = DB::table('analyzes')->orderBy('id','desc')->get();
         return view('page.allvicrow',[
@@ -92,7 +93,7 @@ class FrontController extends Controller
 			'analyzes'=>$analyzes
 		]);
 	}
-	
+
     public function news($id) {
 		visit($id);
         $news = DB::table('blogs')->where('id',$id)->first();
@@ -164,8 +165,8 @@ class FrontController extends Controller
         return view('page.live',[
 			'meta_title'=>'เซียน7เอ็มดอทคอม ดูบอลบสด ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก',
 			'meta_description'=>'เซียน7เอ็มดอทคอม ดูบอลบสด ศูนย์รวมข่าวสารวงการบอล จากลีกดังทั่วโลก เที่ยงตรง กระชับ ฉับไว',
-		]);			
-	}	
+		]);
+	}
 
 	public function check_lotto(Request $request) {
 		$myLotto=$request->input('ur_lotto');
@@ -189,7 +190,7 @@ class FrontController extends Controller
 			'lotto_at'=>$lotto_at,
 			'reason'=>$result['reason'],
 			'mylotto'=>$result['mylotto'],
-		]);	
+		]);
 	}
 	public function lotto() {
 		$lotto=Lotto::orderBy('lotto_at','desc')->first();
@@ -209,6 +210,6 @@ class FrontController extends Controller
 			'lotto_last2'=>$lotto->lotto_last2,
 			'lotto_at'=>$lotto_at,
 			'reason'=>'none',
-		]);		
+		]);
 	}
 }

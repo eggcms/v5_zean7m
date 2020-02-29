@@ -19,9 +19,11 @@ class FrontController extends Controller
 
 		$max_tstep=$tsteps->count();
         $dataxSet = [];
+        $im=0;
         if ($max_tstep > 0) {
-			foreach($tsteps as $ttsx) {
-				//$av = db::table('users')->where('id',$ttsx->uid)->first();
+			$im++;
+			foreach($tstepsx as $ttsx) {
+				$av = User::where('id',$ttsx->uid)->first();
 				if ($ttsx->team1w == 0) { $ttsx->team1w='black'; }
 				elseif ($ttsx->team1w == 1) { $ttsx->team1w='red'; }
 				elseif ($ttsx->team1w == 2) { $ttsx->team1w='#00CC00'; }
@@ -42,27 +44,33 @@ class FrontController extends Controller
 					"team3w"=> $ttsx->team3w,
 					"created_at"=> $ttsx->created_at,
                     "updated_at"=> $ttsx->updated_at,
+					"img"=> $im,
+					"facebook"=> $av->facebook,
+					"userline"=> $av->line
 				];
 			}
 			$mm = (8 - $max_tstep);
 			for($i=1;$i<=$mm;$i++){
-				$dataxSet[] = ["id"=> '',"uid"=> '',"team1"=> '',"team2"=> '',"team3"=> '',"team1w"=> '',"team2w"=> '',"team3w"=> '',"created_at"=> '',"updated_at"=> ''];
+				$imi=$im+$i;
+				$dataxSet[] = ["id"=> '',"uid"=> '',"team1"=> '',"team2"=> '',"team3"=> '',"team1w"=> '',"team2w"=> '',"team3w"=> '',"created_at"=> '',"updated_at"=> '',"img"=>$imi,"line"=>''];
 			}
 		}
-		else {			
+		else {
 			for($i=1;$i<=8;$i++){
-				$dataxSet[] = ["id"=> '',"uid"=> '',"team1"=> '',"team2"=> '',"team3"=> '',"team1w"=> '',"team2w"=> '',"team3w"=> '',"created_at"=> '',"updated_at"=> ''];
-			}			
+				$imi=$im+$i;
+				$dataxSet[] = ["id"=> '',"uid"=> '',"team1"=> '',"team2"=> '',"team3"=> '',"team1w"=> '',"team2w"=> '',"team3w"=> '',"created_at"=> '',"updated_at"=> '',"img"=>$imi,"line"=>''];
+			}
 		}
 
-        return view('page.home',[
-			'meta_title'=>'เซียน7เอ็มดอทคอม ศูนย์รวมทีเด็ดบอลสเต็ป โดยบรรดากูรู ระดับเซียนในวงการลูกหนัง',
-			'meta_description'=>'เซียน7เอ็มดอทคอม ศูนย์รวมทีเด็ดบอลสเต็ป ข้อมูลบอลจากลีกดังทั่วโลก โดยมุ่งเน้นข้อมูลที่ถูกต้อง ฉับไวเที่ยงตรง โดยบรรดากูรู ระดับเซียนในวงการลูกหนัง',
+		return view('page.home',[
+			'meta_title'=>'เซียน7m ศูนย์รวมทีเด็ดบอลสเต็ป โดยบรรดากูรู ระดับเซียนในวงการลูกหนัง',
+			'meta_description'=>'เซียน7m ศูนย์รวมทีเด็ดบอลสเต็ป ข้อมูลบอลจากลีกดังทั่วโลก โดยมุ่งเน้นข้อมูลที่ถูกต้อง ฉับไวเที่ยงตรง โดยบรรดากูรู ระดับเซียนในวงการลูกหนัง',
 			'news'=>$news,
 			'analyzes'=>$analyzes,
 			'objs'=>$objs,
             'youtube'=>$youtube,
-            'tsteps'=>$dataxSet
+            'tsteps'=>$dataxSet,
+            'tstep_count'=>$max_tstep,
 		]);
 	}
 	
@@ -185,8 +193,6 @@ class FrontController extends Controller
 	}
 	public function lotto() {
 		$lotto=Lotto::orderBy('lotto_at','desc')->first();
-//		dd(check_lotto('781403',$lotto));
-
 		$lotto_at=explode('-',$lotto->lotto_at);
 		$month = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
 		$at =(int) $lotto_at[1];

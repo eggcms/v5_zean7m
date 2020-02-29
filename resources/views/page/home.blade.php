@@ -161,7 +161,7 @@
                     <div class="col-12 col-md-3 mt-3">
                         <div class="img-tded">
                             <div class="img-tded">
-                                 <a href="tsLineID($ts['img'])"><img src="{{url('/images/step-'. $ts['img'] .'.gif')}}" class="img-fluid"></a>
+                                 <a href="{{tsLineID($ts['img'])}}"><img src="{{url('/images/step-'. $ts['img'] .'.gif')}}" class="img-fluid"></a>
                             </div>
                         </div>
                         <div class="tded-step py-2 border-bottom">

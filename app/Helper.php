@@ -1,17 +1,13 @@
 <?php
 function check_lotto($mylotto,$lotto) {
-
    if ($mylotto == $lotto->lotto1) {
       return ['reason'=>'คุณถูกรางวัลที่ 1','mylotto'=>$mylotto];
    } else {
-      
       $res=explode(' ',$lotto->lotto2);
       if (in_array($mylotto, $res)) {
          return ['reason'=>'คุณถูกรางวัลที่ 2','mylotto'=>$mylotto];
-
       }
       else {
-
          $res = explode(' ',$lotto->lotto1closeup);
          if (in_array($mylotto, $res)) {
             return ['reason'=>'คุณถูกรางวัลข้างเคียงรางวัลที่ 1','mylotto'=>$mylotto];
@@ -35,7 +31,6 @@ function check_lotto($mylotto,$lotto) {
                      } else {
                         $res=explode(' ',$lotto->lotto_last3);
                         $mylotto3=substr($mylotto,3);
-                        
                         if (in_array($mylotto3,$res)) {
                            return ['reason'=>'คุณถูกรางวัลเลขท้าย 3 ตัว','mylotto'=>$mylotto];
                         } else {
@@ -53,8 +48,8 @@ function check_lotto($mylotto,$lotto) {
          }
       }
    }
-
 }
+
 function getIP() {
    if (!empty($_SERVER['HTTP_CLIENT_IP'])) $ip_address = $_SERVER['HTTP_CLIENT_IP'];
    elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -69,6 +64,12 @@ function serv_url($data='') {
    else return $mainServ.'/';
 }
 
+function tsLineID($id) {
+   if ($id == 1) { return 'http://line.me/ti/p/~@tdedclub88'; }
+   else {
+      return 'http://line.me/ti/p/~@tdedclub88';
+   }
+}
 function visit($id, $act='',$db='news') { 
    if ($db == 'news') {
       $v = DB::table('blogs')->where('id', $id)->first();

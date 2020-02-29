@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use DB;
 use App\Analyze;
 use App\Lotto;
+
 class FrontController extends Controller
 {
     public function index() {
@@ -21,8 +22,9 @@ class FrontController extends Controller
         $dataxSet = [];
         $im=0;
         if ($max_tstep > 0) {
-			$im++;
+
 			foreach($tstepsx as $ttsx) {
+				$im++;
 				$av = User::where('id',$ttsx->uid)->first();
 				if ($ttsx->team1w == 0) { $ttsx->team1w='black'; }
 				elseif ($ttsx->team1w == 1) { $ttsx->team1w='red'; }

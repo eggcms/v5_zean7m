@@ -109,7 +109,7 @@
     </div>
 </div>
 
-<div class="youtube">
+{{-- <div class="youtube">
     <div class="container bg-con py-lg-3 ">
         <div class="row">
             <div class="col">
@@ -119,21 +119,20 @@
                     <div class="col-12 col-lg-6 py-2 py-lg-0">
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe width="1903" height="768" src="{{ $y->clip }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    @if($y->clip2)
+
                         <div class="col-12 col-lg-6 py-2 py-lg-0">
                             <div class="embed-responsive embed-responsive-16by9">
                                 <iframe width="1903" height="768" src="{{ $y->clip2 }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </div>
                         </div>
                     </div>
-                    @endif
                     @endforeach
                 @endif
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 <div class="benner-1">

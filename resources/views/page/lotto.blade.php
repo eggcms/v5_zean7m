@@ -25,7 +25,6 @@
             <div class="col-12 mb-2">
                 <div class="page-1">
                     <i class="fas fa-home" aria-hidden="true"></i> <a href="{{ url('/') }}">หน้าแรก</a>
-                    {{--  <i class="fas fa-angle-right text-danger" aria-hidden="true"></i> <a href="{{ url('/allnews') }}">ข่าวกีฬาวันนี้</a>  --}}
                     <i class="fas fa-angle-right text-danger" aria-hidden="true"></i> <span>ตรวจสลากกินแบ่งรัฐบาล งวดวันที่ {{ $lotto_at ?? '...' }}</span>
                 </div>
             </div>
@@ -81,7 +80,7 @@
                                         <div class="row">
                                             <div class="col-4 text-center"><h3 class="text-center text-danger">เลขหน้า 3 ตัว</h3><p class="text-dark">{{$lotto->lotto_front3}}</p></div>
                                             <div class="col-4 text-center"><h3 class="text-center text-danger">เลขท้าย 3 ตัว</h3><p class="text-dark">{{$lotto->lotto_last3}}</p></div>
-                                            <div class="col-4 text-center"><h3 class="text-center text-danger">เลขหน้า 2 ตัว</h3><p class="text-dark">{{$lotto->lotto_last2}}</p></div>
+                                            <div class="col-4 text-center"><h3 class="text-center text-danger">เลขท้าย 2 ตัว</h3><p class="text-dark">{{$lotto->lotto_last2}}</p></div>
                                         </div>
                                     </div>
 
@@ -158,7 +157,7 @@
                                     <h3 class="text-center">XXXX</h3>
                                 </div>
                                 @include('component.lineform')
-                                <img src="/images/invite.png" alt="">
+                                <img src="{{url('/images/invite.png')}}" alt="">
                             </div>
                         </div>
                     </div>

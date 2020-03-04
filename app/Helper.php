@@ -91,7 +91,19 @@ function visit($id, $act='',$db='news') {
    }
 }
 
+function thDate($strDate) {
+    $str = date("Y",strtotime($strDate))+543;
+    $str= date("d-m-Y",$strDate);
+    $thai=explode('-',$str);
+    $strMonth=(int)$thai['1'];
+    $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
+    $strMonthThai=$strMonthCut[$strMonth];
+    $strYearThai = $thai['2']+543;
+    return $thai['0'].' '.$strMonthThai.' '.$strYearThai;
+}
+
 function thaiDate($strDate,$time="") {
+   return $strDate;
     $strYear = date("Y",strtotime($strDate))+543;
     $strMonth= date("n",strtotime($strDate));
     $strDay= date("j",strtotime($strDate));
@@ -246,11 +258,11 @@ function ball_table() {
 
 
 function ballstep($obj) {
-   echo '<div id="review-socre">
-      <div class="head-tded">
-         <h3 style="color: #FF0;"><span style="font-size:18px;">ประจำวันที่</span> '.thaiDate(date('d-m-Y'),'off').'</h3>
-      </div>
-   </div>';
+   // echo '<div id="review-socre">
+   //    <div class="head-tded">
+   //       <h3 style="color: #FF0;"><span style="font-size:18px;">ประจำวันที่</span> '.thDate(time()).'</h3>
+   //    </div>
+   // </div>';
  
     $league='';
     foreach($obj->data as $ob) {

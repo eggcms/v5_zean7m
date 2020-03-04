@@ -40,16 +40,7 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-12 col-lg-9 pr-md-0">
-
-                        
-
-                        
                         <div id="mPlayer" class="bg-light"></div>
-                            
-
-                    
-                    
-                    
                     </div>
                     <div class="col-12 col-lg-3">
                         <div class="mb-2">
@@ -138,8 +129,53 @@
 <div class="benner-1">
     <div class="container bg-con">
         <div class="row">
-            <div class="col-12 py-2">
-                <a href="https://www.mm88zean.com" target="_blank"><img src="/images/bn-1.gif" alt=""></a>
+            <div class="col-12 pt-3">
+                <a href="https://www.mm88zean.com" target="_blank"><img src="{{ url('images/bn-1.gif') }}" alt=""></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="title">
+    <div class="container pt-3 bg-con">
+        <div class="row">
+            <div class="col-12">
+                <div class="title-tded">
+                    <h3>ทีเด็ดบอลเต็ง / {{ thDate(time()) }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="zean">
+    <div class="container bg-con">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    @foreach($tdbset as $tdb)
+                    <div class="col-12 col-md-3 mt-3">
+                        <div class="img-tded">
+                            <div class="img-tded">
+                                 <a href="{{tsLineID($tdb['img'])}}"><img src="{{url('/images/bn-teng'. $tdb['img'] .'.jpg')}}" class="img-fluid"></a>
+                            </div>
+                        </div>
+                        <div class="tded-step py-2 border-bottom">
+                            @if($tdb['team1'] != '')
+                                <p><img class="img-1" src="/images/ball.gif" alt=""><span style="color:{{$tdb['team1w']}}">{{$tdb['team1']}}</span></p>
+                            @else
+                                <p class="text-center">กำลังอัพเดทข้อมูล...</p>
+                            @endif
+                        </div>
+                        <div class="tded-step py-2 border-bottom" style="background:#eee;">
+                            @if($tdb['team2'] != '')
+                                <p><img class="img-1" src="/images/ball.gif" alt=""><span style="color:{{$tdb['team2w']}}">{{$tdb['team2']}}</span></p>
+                            @else
+                                <p class="text-center">กำลังอัพเดทข้อมูล...</p>
+                            @endif
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -150,13 +186,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="title-tded">
-                    <h3>ทีเด็ดสเต็ป วันที่ 20 ก.พ 2563</h3>
+                    <h3>ทีเด็ดสเต็ป / {{ thDate(time()) }}</h3>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <div class="zean">
     <div class="container bg-con">
         <div class="row">
@@ -299,7 +334,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="title-tded">
-                    <h3>ทรรศะบอล วันที่ 20 ก.พ 2563</h3>
+                    <h3>ทรรศะบอล {{ thDate(time()) }}</h3>
                 </div>
             </div>
         </div>

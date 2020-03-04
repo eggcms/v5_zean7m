@@ -37,25 +37,22 @@
         <div class="row">
             <div class="col-12">
                 <div class="row">
-
                     <div class="col-12 col-lg-8">
                         <div class="content-vc text-light">
-@if($reason!='none')
-<div class="my-2 p-3 lotto_checked bg-warning rounded">
-    <h1 class="text-center text-danger">ผลการตรวจสลากกินแบ่งรัฐบาล</h1>
-    <p class="text-dark text-center">เลขสลาก: {{ $mylotto }}</p>
-    <h3 class="text-center rounded text-light py-3 bg-danger">{{ $reason }}</h3>
-</div>
-@endif
-
-
+                            @if($reason!='none')
+                            <div class="my-2 p-3 lotto_checked bg-warning rounded">
+                                <h1 class="text-center text-danger">ผลการตรวจสลากกินแบ่งรัฐบาล</h1>
+                                <p class="text-dark text-center">เลขสลาก: {{ $mylotto }}</p>
+                                <h3 class="text-center rounded text-light py-3 bg-danger">{{ $reason }}</h3>
+                            </div>
+                            @endif
                             <div class="my-2 p-3 border check-lotto bg-egg rounded">
                                 <h3 class="text-center text-dark">ตรวจสลากกินแบ่งรัฐบาล</h3>
                                 <form action="/lotto" method="post">
                                     <div class="form-group text-center">
                                         <input type="type" name="ur_lotto" class="form-control text-center" placeholder="กรอกเลขสลาก" maxlength="6" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" required>
                                     </div>
-                                    <div id="result" class="form-group text-success bg-light py-2 px-3 rounded text-center">รอผลสลากกินแบ่ง</div>
+                                    {{-- <div id="result" class="form-group text-success bg-light py-2 px-3 rounded text-center">รอผลสลากกินแบ่ง</div> --}}
                                     <button type="submit" class="btn btn-danger form-control">ตรวจสลากฯ ของคุณ</button>
                                     @csrf
                                 </form>
@@ -153,8 +150,8 @@
                                 <div class="lao_lotto rounded mt-2 mb-3 p-3">
                                     <h1 class="text-center">หวยลาว</h1>
                                     <h2 class="text-center text-danger"> ກວດຜົນຫວຍລາວ</h2>
-                                    <h2 class="text-center">งวดวันพุธที่ XX</h2>
-                                    <h3 class="text-center">XXXX</h3>
+                                    <h2 class="text-center">งวดวันที่ {{ $lotto_lao_at }}</h2>
+                                    <h3 class="text-center">{{ $lotto_lao }}</h3>
                                 </div>
                                 @include('component.lineform')
                                 <img src="{{url('/images/invite.png')}}" alt="">

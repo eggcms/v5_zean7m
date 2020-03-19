@@ -260,7 +260,7 @@
                             @foreach($analyzes as $an)
                             <div class="col-sm-6 col-md-4 mb-4">
                                 <a href="{{url('analyze/'.$an->id)}}">
-                                    <img class="rounded" src="http://api-88sport.com/imgs/{{ $an->image }}" alt="{{ $an->title }}">
+                                    <img class="rounded" src="http://api-88sport.com/imgs/{{ $an->image2 }}" alt="{{ $an->title }}">
                                     <p>{{ $an->title }}</p>
                                 </a>
                             </div>
